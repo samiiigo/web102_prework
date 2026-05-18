@@ -165,7 +165,33 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
 });
 
 // use destructuring and the spread operator to grab the first and second games
+let [firstGame, secondGame, ...others] = sortedGames;
 
 // create a new element to hold the name of the top pledge game, then append it to the correct element
+let firstGameElement = document.createElement("p");
+firstGameElement.innerHTML = firstGame.name;
+firstGameContainer.appendChild(firstGameElement);
 
 // do the same for the runner up item
+let secondGameElement = document.createElement("p");
+secondGameElement.innerHTML = secondGame.name;
+secondGameContainer.appendChild(secondGameElement);
+
+/************************************************************************************
+ * Bonus: Search functionality
+ ***********************************************************************************/
+const searchInput = document.getElementById("search-input");
+
+function searchGames() {
+    deleteChildElements(gamesContainer);
+    const searchTerm = searchInput.value.toLowerCase();
+    
+    let searchedGames = GAMES_JSON.filter(game => 
+        game.name.toLowerCase().includes(searchTerm)
+    );
+    
+    addGamesToPage(searchedGames);
+}
+
+// Add event listener to the search input so it searches as the user types
+searchInput.addEventListener("input", searchGames);
